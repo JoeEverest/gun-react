@@ -4,7 +4,7 @@ import Gun from 'gun'
 // initialize gun locally
 const gun = Gun({
   peers: [
-    'http://192.168.43.221:3030/gun'
+    'https://gun-peer-to-peer-chat.herokuapp.com/gun'
   ]
 })
 
