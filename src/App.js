@@ -4,16 +4,16 @@ import Gun from 'gun'
 // initialize gun locally
 const gun = Gun({
   peers: [
-    'https://gun-peer-to-peer-chat.herokuapp.com/gun'
+    'http://192.168.43.221:3030/gun'
   ]
 })
 
-// create the initial state to hold the messages
+
 const initialState = {
   messages: []
 }
 
-// Create a reducer that will update the messages array
+
 function reducer(state, message) {
   return {
     messages: [message, ...state.messages]
@@ -21,16 +21,13 @@ function reducer(state, message) {
 }
 
 export default function App() {
-  // the form state manages the form input for creating a new message
+  
     const [formState, setForm] = useState({
     name: '', message: ''
   })
 
-  // initialize the reducer & state for holding the messages array
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  // when the app loads, fetch the current messages and load them into the state
-  // this also subscribes to new data as it changes and updates the local state
   useEffect(() => {
     const messages = gun.get('messages')
     messages.map().on(m => {
@@ -42,7 +39,6 @@ export default function App() {
     })
   }, [])
 
-  // set a new message in gun, update the local state to reset the form field
   function saveMessage() {
     const messages = gun.get('messages')
     messages.set({
@@ -55,7 +51,7 @@ export default function App() {
     })
   }
 
-  // update the form state as the user types
+  
   function onChange(e) {
     setForm({ ...formState, [e.target.name]: e.target.value  })
   }
